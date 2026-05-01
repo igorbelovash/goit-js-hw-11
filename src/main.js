@@ -12,6 +12,10 @@ function handleSubmit(event) {
     event.preventDefault();
 
     const query = event.target.elements["search-text"].value.trim();
+    if (!query) {
+        return;
+    }
+
     clearGallery();
     showLoader();
     getImagesByQuery(query)
@@ -29,7 +33,12 @@ function handleSubmit(event) {
             }
         })
         .catch(error => {
-            console.log(error.message)
+            iziToast.show({
+                    color: '#EF4040',
+                    messageColor: '#FAFAFB',
+                    message: `${error.message}`,
+                    maxWidth: '322px'
+                });
         })
         .finally(() => {
             event.target.reset();
